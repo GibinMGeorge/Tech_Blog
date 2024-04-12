@@ -2,7 +2,7 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const exphbs = require('express-handlebars');
-const sequelize = require('./config/database');
+const sequelize = require('./config/connection');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Set up session middleware
 const sessionStore = new SequelizeStore({ db: sequelize });
 app.use(session({
-    secret: 'your_secret_key',
+    secret: 'a_secret_key',
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
