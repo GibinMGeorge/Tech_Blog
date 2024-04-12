@@ -1,0 +1,16 @@
+{{#> layouts/main pageTitle="Dashboard"}}
+    <h1>Dashboard</h1>
+    <a href="/blog/post/new">Add New Post</a>
+    {{#if userPosts}}
+        <ul>
+            {{#each userPosts}}
+                <li>
+                    <a href="/blog/post/{{this.id}}">{{this.title}}</a> - <a href="/blog/post/{{this.id}}/edit">Edit</a> | <a href="/blog/post/{{this.id}}/delete">Delete</a>
+                </li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>No posts available</p>
+    {{/if}}
+    <a href="/">Homepage</a> | <a href="/auth/logout">Logout</a>
+{{/layouts/main}}
