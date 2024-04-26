@@ -1,54 +1,47 @@
+const path = require('path');
 const express = require('express');
 const session = require('express-session');
-const path = require('path');
 const exphbs = require('express-handlebars');
+const routes = require('./controllers');
+const helpers = require('./utils/helpers');
+
 const sequelize = require('./config/connection');
+
+// for cookies
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
-// Import routes
-const indexRoutes = require('./routes/index');
-const authRoutes = require('./routes/authRoutes');
-const blogRoutes = require('./routes/blogRoutes');
+// Set up Handlebars.js 
+const hbs = exphbs.create({ helpers });
 
-// Set up Handlebars as the view engine
-app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+const sess = {
+  secret: 'Super secret secret',
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000, // expires after 1 day
+    httpOnly: true,
+    secure: false,
+    sameSite: 'strict',
+  },
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize
+  })
+};
+
+app.use(session(sess));
+
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
-// Serve static files from the public directory
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Set up session middleware
-const sessionStore = new SequelizeStore({ db: sequelize });
-app.use(session({
-    secret: 'a_secret_key',
-    resave: false,
-    saveUninitialized: false,
-    store: sessionStore,
-    cookie: { maxAge: 3600000 } // Session timeout: 1 hour
-}));
-
-// Parse incoming JSON requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Define routes
-app.use('/', indexRoutes);
-app.use('/auth', authRoutes);
-app.use('/blog', blogRoutes);
+app.use(routes);
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send('Something broke!');
-});
-
-// Sync database and start server
-sequelize.sync().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Server is running on http://localhost:${PORT}`);
-    });
-}).catch(err => {
-    console.error('Unable to connect to the database:', err);
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log('Now listening'));
 });

@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const { renderSignInForm, signIn, renderSignUpForm, signUp } = require('../controllers/authController');
 
-// Import controllers
-const { renderSignUpForm, signUp, renderSignInForm, signIn, logout } = require('../controllers/authController');
+// Render login form
+router.get('/login', renderSignInForm);
+// Handle login form submission
+router.post('/login', signIn);
 
-// Authentication routes
+// Render signup form
 router.get('/signup', renderSignUpForm);
+// Handle signup form submission
 router.post('/signup', signUp);
-router.get('/signin', renderSignInForm);
-router.post('/signin', signIn);
-router.get('/logout', logout);
 
 module.exports = router;

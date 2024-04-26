@@ -1,18 +1,20 @@
-const Comment = require('../models/Comment'); // Assuming you have a Comment model defined
+const Comment = require('../models/Comment');
 
 exports.addComment = async (req, res) => {
     try {
         const { postId, content } = req.body;
-        // Check if postId and content are provided
-        if (!postId || !content) {
-            return res.status(400).send('Post ID and content are required');
+        
+        // Validation
+        if (!postId || !content || typeof postId !== 'number' || typeof content !== 'string' || content.trim() === '') {
+            return res.status(400).json({ error: 'Invalid data provided for comment' });
         }
+
         // Create the comment
         const newComment = await Comment.create({ postId, content, userId: req.session.userId });
         res.status(201).json({ message: 'Comment added successfully', comment: newComment });
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Error adding comment');
+        console.error('Error adding comment:', error);
+        res.status(500).json({ error: 'Error adding comment' });
     }
 };
 
@@ -20,21 +22,21 @@ exports.editComment = async (req, res) => {
     const commentId = req.params.id;
     const { content } = req.body;
     try {
-        await Comment.update({ content }, { where: { id: commentId } }); // Update the content of the comment in the database
-        res.redirect('/'); // Redirect to the homepage after editing the comment
+        await Comment.update({ content }, { where: { id: commentId } });
+        res.redirect('/');
     } catch (error) {
         console.error('Error editing comment:', error);
-        res.status(500).send('Error editing comment');
+        res.status(500).json({ error: 'Error editing comment' });
     }
 };
 
 exports.deleteComment = async (req, res) => {
     const commentId = req.params.id;
     try {
-        await Comment.destroy({ where: { id: commentId } }); // Delete the comment from the database
-        res.redirect('/'); // Redirect to the homepage after deleting the comment
+        await Comment.destroy({ where: { id: commentId } });
+        res.redirect('/');
     } catch (error) {
         console.error('Error deleting comment:', error);
-        res.status(500).send('Error deleting comment');
+        res.status(500).json({ error: 'Error deleting comment' });
     }
 };
