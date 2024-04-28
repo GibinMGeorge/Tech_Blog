@@ -4,45 +4,57 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tech_Blog</title>
-  <link rel="stylesheet" href="/css/custom.css">
+  <!-- Import Google Icon Font -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- Materialize CSS -->
+  <link type="text/css" rel="stylesheet" href="/css/materialize.min.css" media="screen,projection">
 </head>
 
 <body>
-    <nav class="p-3 bg-secondary-subtle border border-primary-subtle">
-      <div>
-        <h2>Tech_Blog</h2>
-            {{#if_equals active_page 'home'}}
-              <b><a href="/">Home</a></b>
-            {{else}}
-              <a href="/">Home</a>
-            {{/if_equals}}
+  <!-- Materialize Navbar -->
+  <nav>
+    <div class="nav-wrapper bg-secondary-subtle">
+      <a href="#" class="brand-logo">Tech_Blog</a>
+      <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li {{#if_equals active_page 'home'}}class="active"{{/if_equals}}><a href="/">Home</a></li>
+        <li {{#if_equals active_page 'dashboard'}}class="active"{{/if_equals}}><a href="/dashboard">Dashboard</a></li>
+        {{#if logged_in}}
+          <li><a href="#" id="logout">Logout</a></li>
+        {{else}}
+          <li {{#if_equals active_page 'login'}}class="active"{{/if_equals}}><a href="/login">Login</a></li>
+        {{/if}}
+      </ul>
+    </div>
+  </nav>
 
-            {{#if_equals active_page 'dashboard'}}
-              <b><a href="/dashboard">Dashboard</a></b>
-            {{else}}
-              <a href="/dashboard">Dashboard</a>
-            {{/if_equals}}
-
-            {{#if logged_in}}
-              <a href="#" id="logout">Logout</a>
-            {{else}}
-              {{#if_equals active_page 'login'}}
-                <b><a href="/login">Login</a></b>
-              {{else}}
-                <a href="/login">Login</a>
-              {{/if_equals}}
-            {{/if}}
-
-      </div>
-    </nav>
+  <!-- Side Navigation -->
+  <ul class="sidenav" id="mobile-nav">
+    <li {{#if_equals active_page 'home'}}class="active"{{/if_equals}}><a href="/">Home</a></li>
+    <li {{#if_equals active_page 'dashboard'}}class="active"{{/if_equals}}><a href="/dashboard">Dashboard</a></li>
+    {{#if logged_in}}
+      <li><a href="#" id="logout">Logout</a></li>
+    {{else}}
+      <li {{#if_equals active_page 'login'}}class="active"{{/if_equals}}><a href="/login">Login</a></li>
+    {{/if}}
+  </ul>
 
   <div class="container">  
     {{{ body }}}
   </div>
 
+  <!-- Materialize JavaScript -->
+  <script type="text/javascript" src="/js/materialize.min.js"></script>
+  <!-- Initialize Side Navigation -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('.sidenav');
+      var instances = M.Sidenav.init(elems);
+    });
+  </script>
+
   {{#if logged_in}}
     <script src="/js/logout.js"></script>
   {{/if}}
-
 </body>
 </html>

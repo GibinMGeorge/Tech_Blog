@@ -1,11 +1,9 @@
 <h2>All Posts:</h2>
 {{#each posts as |post|}}
-  <div class="border rounded-3 mx-auto my-3">
-    <div class="container-fluid bg-primary-subtle rounded-top-3 py-1">
-      <h5><a href="/post/{{id}}"><p>{{title}}</p></h5></a>
-      <p>Posted by {{user.username}} by {{createdAt}}</p>
-    </div>
-    <div class="container py-3">
+  <div class="card mx-auto my-3">
+    <div class="card-content">
+      <span class="card-title"><a href="/post/{{id}}">{{title}}</a></span>
+      <p>Posted by {{user.username}} on {{createdAt}}</p>
       <p>{{text}}</p>
     </div>
   </div>
