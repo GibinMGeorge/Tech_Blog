@@ -1,11 +1,18 @@
-{{!-- {{#> layouts/main pageTitle="Sign Up"}}
-    <h1>Sign Up</h1>
-    <form action="/auth/signup" method="POST">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <button type="submit">Sign Up</button>
-    </form>
-    <a href="/auth/signin">Already have an account? Sign In</a>
-{{/layouts/main}} --}}
+<h3>SIGN UP:</h3>
+<form class="form signup-form">
+  <div class="input-field">
+    <input id="username-signup" type="text">
+    <label for="username-signup">Username</label>
+  </div>
+  <div class="input-field">
+    <input id="email-signup" type="email">
+    <label for="email-signup">Email</label>
+  </div>
+  <div class="input-field">
+    <input id="password-signup" type="password">
+    <label for="password-signup">Password</label>
+  </div>
+    <button type="submit">Sign Up</button>
+</form>
+
+<script src="./js/signup.js"></script>

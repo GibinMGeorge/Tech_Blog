@@ -1,36 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{pageTitle}}</title>
-    <!-- Include any CSS files here -->
-    <link rel="stylesheet" href="/css/styles.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tech_Blog</title>
+  <link rel="stylesheet" href="/css/custom.css">
 </head>
+
 <body>
-    <!-- Include header here -->
-    <header>
-        <h1>My Blog</h1>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/blog/dashboard">Dashboard</a></li>
-                {{#if isAuthenticated}}
-                    <li><a href="/auth/logout">Logout</a></li>
-                {{else}}
-                    <li><a href="/auth/signin">Sign In</a></li>
-                    <li><a href="/auth/signup">Sign Up</a></li>
-                {{/if}}
-            </ul>
-        </nav>
-    </header>
-    {{{body}}} <!-- This will render the content of the specific page -->
-    <!-- Include footer here -->
-    <footer>
-        <p>&copy; 2024 My Blog. All rights reserved.</p>
-    </footer>
-    <!-- Include any JavaScript files here -->
-    <script src="scripts.js"></script>
+    <nav class="p-3 bg-secondary-subtle border border-primary-subtle">
+      <div>
+        <h2>Tech_Blog</h2>
+            {{#if_equals active_page 'home'}}
+              <b><a href="/">Home</a></b>
+            {{else}}
+              <a href="/">Home</a>
+            {{/if_equals}}
+
+            {{#if_equals active_page 'dashboard'}}
+              <b><a href="/dashboard">Dashboard</a></b>
+            {{else}}
+              <a href="/dashboard">Dashboard</a>
+            {{/if_equals}}
+
+            {{#if logged_in}}
+              <a href="#" id="logout">Logout</a>
+            {{else}}
+              {{#if_equals active_page 'login'}}
+                <b><a href="/login">Login</a></b>
+              {{else}}
+                <a href="/login">Login</a>
+              {{/if_equals}}
+            {{/if}}
+
+      </div>
+    </nav>
+
+  <div class="container">  
+    {{{ body }}}
+  </div>
+
+  {{#if logged_in}}
+    <script src="/js/logout.js"></script>
+  {{/if}}
+
 </body>
 </html>

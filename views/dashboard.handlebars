@@ -1,17 +1,54 @@
+<!-- Button trigger modal -->
+<button type="button" class="my-3 btn btn-primary" data-toggle="modal" data-target="#createPost">
+  Create Post
+</button>
 
-{{#> layouts/main pageTitle="Dashboard"}}
-    <h1>Dashboard</h1>
-    <a href="/blog/post/new">Add New Post</a>
-    {{#if userPosts}}
-        <ul>
-            {{#each userPosts}}
-                <li>
-                    <a href="/blog/post/{{this.id}}">{{this.title}}</a> - <a href="/blog/post/{{this.id}}/edit">Edit</a> | <a href="/blog/post/{{this.id}}/delete">Delete</a>
-                </li>
-            {{/each}}
-        </ul>
-    {{else}}
-        <p>No posts available</p>
-    {{/if}}
-    <a href="/">Homepage</a> | <a href="/auth/logout">Logout</a>
-{{/layouts/main}}
+<h2>Your Posts:</h2>
+{{#if posts}}
+  {{#each posts as |post|}}
+    <div class="border rounded-3 mx-auto my-3">
+      <div class="container-fluid bg-primary-subtle rounded-top-3 py-1">
+        <h5><a href="/post/{{post.id}}"><p>{{post.title}}</p></h5></a>
+        <p>Posted on {{post.createdAt}}</p>
+      </div>
+      <div class="container py-3">
+        <p>{{text}}</p>
+      </div>
+    </div>
+  {{/each}}
+{{else}}
+<p>You have no posts!</p>
+{{/if}}
+
+<!-- Modal -->
+<div class="modal fade" id="createPost" tabindex="-1" role="dialog" aria-labelledby="createPostLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createPostLabel">Create a new Post:</h5>
+      </div>
+      <div class="modal-body">
+        
+        <div class="input-field">
+          <label for="post-title"></label>
+          <input class="form-control" id="post-title" placeholder="Title"></textarea>
+        </div>
+        <div class="input-field">
+          <label for="post-text"></label>
+          <textarea class="form-control" id="post-text" rows="5" placeholder="What is your concern?"></textarea>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary post-button" type="click">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+<script src="/js/newPost.js"></script>
