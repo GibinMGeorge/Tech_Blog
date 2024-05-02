@@ -75,13 +75,13 @@ const updatePost = async (e) => {
 };
 
 document 
-  .querySelector('.comment-button')
+  .querySelector('#comment-button')
   .addEventListener('click', commentFormHandler);
 
 document
-  .querySelector('.delete-post-button')
+  .querySelector('#delete-post-button')
   .addEventListener('click', deletePost);
 
 document
-  .querySelector('.update-post-button')
+  .querySelector('#update-post-button')
   .addEventListener('click', updatePost);

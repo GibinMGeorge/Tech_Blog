@@ -7,8 +7,8 @@
       <p>{{post.text}}</p>
       <div class="bg-primary-subtle rounded-top-3 py-1"></div>
       <div class="card-action">
-        <button type="button" class="btn btn-small waves-effect waves-light" data-toggle="modal" data-target="#updatePost">Update</button>
-        <button type="button" class="btn btn-small red darken-2 delete-post-button ml-2" data-id="{{post.id}}">Delete</button> <!-- Add ml-2 class for margin left -->
+        <button type="button" class="btn btn-small waves-effect waves-light" id = "update-post-button" data-toggle="modal" data-target="#updatePost">Update</button>
+        <button type="button" class="btn btn-small red darken-2 delete-post-button ml-2" id = "delete-post-button" data-id="{{post.id}}">Delete</button> 
       </div>
     </div>
   </div>
@@ -22,7 +22,7 @@
         <label for="comment-text">Add your comment</label>
       </div>
     </div>
-    <button class="btn waves-effect waves-light" type="submit" data-id="{{post.id}}">Post your comment</button>
+    <button class="btn waves-effect waves-light" id = "comment-button" type="submit" data-id="{{post.id}}">Post your comment</button>
   </form>
 </div>
 
